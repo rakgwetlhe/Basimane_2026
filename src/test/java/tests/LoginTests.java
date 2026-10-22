@@ -24,5 +24,9 @@ public class LoginTests extends Base{
     @Test(dependsOnMethods = "clickWebAutomationTab")
     public void purchaseDevice() {
         learningMaterialsPage.selectDeviceType("Phone");
+        learningMaterialsPage.selectBrand("Apple");
+        learningMaterialsPage.selectStorage();
+        learningMaterialsPage.selectColor("Blue");
+        learningMaterialsPage.enterQuantity(2);
     }
 }
