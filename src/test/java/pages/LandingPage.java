@@ -36,5 +36,4 @@ public class LandingPage {
     public void clickLearningMaterials() {
         wait.until(ExpectedConditions.elementToBeClickable(learningMaterials)).click();
     }
-
 }

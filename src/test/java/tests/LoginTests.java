@@ -17,4 +17,12 @@ public class LoginTests extends Base{
         landingPage.clickLearnButton();
         landingPage.clickLearningMaterials();
     }
+    @Test(dependsOnMethods = "verifyLoginSuccess")
+    public void clickWebAutomationTab() {
+        learningMaterialsPage.clickWebAutomationTab(driver);
+    }
+    @Test(dependsOnMethods = "clickWebAutomationTab")
+    public void purchaseDevice() {
+        learningMaterialsPage.selectDeviceType("Phone");
+    }
 }
