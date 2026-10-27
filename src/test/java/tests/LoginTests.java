@@ -30,6 +30,8 @@ public class LoginTests extends Base{
         learningMaterialsPage.selectColor("Blue");
         learningMaterialsPage.enterQuantity(2);
         learningMaterialsPage.enterDeliveryAddress("1 Serengeti Estate");
+        learningMaterialsPage.selectExtras("SAVE10");
+
 
     }
     /*@AfterClass

@@ -32,6 +32,16 @@ public class LearningMaterialsPage {
     WebElement address;
     @FindBy(id = "inventory-next-btn")
     WebElement nextButton;
+    @FindBy(id = "shipping-option-express")
+    WebElement shippingOption;
+    @FindBy(id = "warranty-1yr")
+    WebElement warrantyOption;
+    @FindBy(id = "discount-code")
+    WebElement discountCode;
+    @FindBy(id = "apply-discount-btn")
+    WebElement applyButton;
+    @FindBy(id = "pricing-breakdown-title")
+    WebElement breakdownSummary;
 
     public void clickWebAutomationTab(WebDriver driver) {
         this.driver = driver;
@@ -72,7 +82,16 @@ public class LearningMaterialsPage {
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 500);");
         this.nextButton.click();
     }
-    /*public void clickNextButton() {
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(this.nextButton));*/
+    public void selectExtras(String discount) {
+        this.shippingOption.click();
+        this.warrantyOption.click();
+        this.discountCode.sendKeys(discount);
+        this.applyButton.click();
+    }
+    public void confirmPurchase() {
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 1000);");
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait.until(ExpectedConditions.visibilityOf(breakdownSummary));
+
+    }
 }
