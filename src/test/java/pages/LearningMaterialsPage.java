@@ -1,15 +1,12 @@
 package pages;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +48,10 @@ public class LearningMaterialsPage {
     private WebElement totalAmount;
     @FindBy(id = "purchase-device-btn")
     WebElement confirmPurchase;
+    @FindBy(xpath = "//h4[contains(text(),'Order Successful! \uD83C\uDF89')]")
+    private WebElement orderSuccessMessage;
+    @FindBy(id = "view-history-btn")
+    private WebElement viewInvoiceBtn;
 
     public void clickWebAutomationTab(WebDriver driver) {
         this.driver = driver;
@@ -112,8 +113,6 @@ public class LearningMaterialsPage {
 
         String summaryText = breakdownSummary.getText();
 
-        //Assert.assertTrue(summaryText.contains("Total"));
-
         double subtotal = 960.00;
         double warranty = 49.00;
         double shipping = 25.00;
@@ -142,6 +141,27 @@ public class LearningMaterialsPage {
         Assert.assertEquals(displayedTotal, expectedTotal, 0.01);
 
         this.confirmPurchase.click();
+    }
+    public void successfulOrderMessage(){
+        wait.until(ExpectedConditions.visibilityOf(orderSuccessMessage));
+
+        Assert.assertEquals(orderSuccessMessage.getText().trim(),"ORDER SUCCESSFUL! \uD83C\uDF89");
+
+        wait.until(ExpectedConditions.visibilityOf(viewInvoiceBtn));
+
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block:'center'});",
+                viewInvoiceBtn);
+
+        wait.until(ExpectedConditions.elementToBeClickable(viewInvoiceBtn));
+
+        try {
+            viewInvoiceBtn.click();
+        } catch (ElementClickInterceptedException e) {
+            ((JavascriptExecutor) driver).executeScript(
+                    "arguments[0].click();",
+                    viewInvoiceBtn);
+        }
     }
 
 }

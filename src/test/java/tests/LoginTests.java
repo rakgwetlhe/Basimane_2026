@@ -32,7 +32,7 @@ public class LoginTests extends Base{
         learningMaterialsPage.enterDeliveryAddress("1 Serengeti Estate");
         learningMaterialsPage.selectExtras("SAVE10");
         learningMaterialsPage.confirmPurchase();
-
+        learningMaterialsPage.successfulOrderMessage();
 
 
     }
