@@ -33,6 +33,7 @@ public class LoginTests extends Base{
         learningMaterialsPage.selectExtras("SAVE10");
         learningMaterialsPage.confirmPurchase();
         learningMaterialsPage.successfulOrderMessage();
+        learningMaterialsPage.verifyInvoiceDetails();
 
 
     }
