@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,8 +26,12 @@ public class LearningMaterialsPage {
     WebElement storage;
     @FindBy(id = "color")
     WebElement color;
-    @FindBy(id = "label-quantity")
+    @FindBy(id = "quantity")
     WebElement quantity;
+    @FindBy(id = "address")
+    WebElement address;
+    @FindBy(id = "inventory-next-btn")
+    WebElement nextButton;
 
     public void clickWebAutomationTab(WebDriver driver) {
         this.driver = driver;
@@ -61,5 +66,13 @@ public class LearningMaterialsPage {
         this.quantity.clear();
         this.quantity.sendKeys(String.valueOf(quantity));
     }
-
+    public void enterDeliveryAddress(String address) {
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        this.address.sendKeys(address);
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 500);");
+        this.nextButton.click();
+    }
+    /*public void clickNextButton() {
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(this.nextButton));*/
 }

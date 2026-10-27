@@ -1,5 +1,6 @@
 package tests;
 
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 public class LoginTests extends Base{
@@ -28,5 +29,12 @@ public class LoginTests extends Base{
         learningMaterialsPage.selectStorage();
         learningMaterialsPage.selectColor("Blue");
         learningMaterialsPage.enterQuantity(2);
+        learningMaterialsPage.enterDeliveryAddress("1 Serengeti Estate");
+
     }
+    /*@AfterClass
+    public void tearDown() {
+        if (driver != null)
+            driver.quit();
+    }*/
 }
