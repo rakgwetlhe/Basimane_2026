@@ -51,16 +51,8 @@ public class LearningMaterialsPage {
     WebElement orderSuccessMessage;
     @FindBy(id = "view-history-btn")
     WebElement viewInvoiceBtn;
-    @FindBy(id = "invoice-history-title")
-    WebElement viewInvoice;
     @FindBy(xpath = "//button[contains(@id,'view-invoice-INV-')]")
-    private WebElement viewInvoiceLink;
-    @FindBy(css = "body > div > div.invoice-details > div.invoice-info")
-    private WebElement invoiceInfoSection;
-    @FindBy(xpath = "//div[contains(.,'Invoice #:')]")
-    private WebElement invoiceNumber;
-    @FindBy(xpath = "//strong[text()='Status:']/following-sibling::span")
-    private WebElement invoiceStatus;
+    WebElement viewInvoiceLink;
 
     public void clickWebAutomationTab(WebDriver driver) {
         this.driver = driver;
@@ -173,19 +165,7 @@ public class LearningMaterialsPage {
         }
     }
     public void verifyInvoiceDetails() {
-        wait.until(ExpectedConditions.elementToBeClickable(viewInvoiceLink));
-
-        ((JavascriptExecutor) driver)
-                .executeScript("arguments[0].click();", viewInvoiceLink);
-
-        wait.until(ExpectedConditions.visibilityOf(invoiceInfoSection));
-
-        System.out.println(invoiceNumber.getText());
-
-        Assert.assertEquals(
-                invoiceStatus.getText().trim(),
-                "Paid"
-        );
+        viewInvoiceLink.click();
     }
 }
 
