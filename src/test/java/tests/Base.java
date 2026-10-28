@@ -7,6 +7,9 @@ import pages.LandingPage;
 import pages.LearningMaterialsPage;
 import pages.LoginPage;
 import utils.BrowserFactory;
+import utils.ReadData;
+
+import java.awt.image.RasterFormatException;
 
 public class Base {
 
@@ -18,4 +21,14 @@ public class Base {
     public LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
     public LandingPage landingPage = PageFactory.initElements(driver, LandingPage.class);
     public LearningMaterialsPage learningMaterialsPage = PageFactory.initElements(driver, LearningMaterialsPage.class);
+
+    ReadData readData;
+
+    {
+        try {
+            readData = new ReadData();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

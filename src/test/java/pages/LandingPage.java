@@ -27,13 +27,13 @@ public class LandingPage {
 
         PageFactory.initElements(driver, this);
     }
-    public String getWelcomeMessage() {
-        return wait.until(ExpectedConditions.visibilityOf(welcomeMessage)).getText();
+    public void getWelcomeMessage() {
+        this.wait.until(ExpectedConditions.visibilityOf(welcomeMessage)).isDisplayed();
     }
     public void clickLearnButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(learnButton)).click();
+        this.wait.until(ExpectedConditions.elementToBeClickable(learnButton)).click();
     }
     public void clickLearningMaterials() {
-        wait.until(ExpectedConditions.elementToBeClickable(learningMaterials)).click();
+        this.wait.until(ExpectedConditions.elementToBeClickable(learningMaterials)).click();
     }
 }

@@ -8,8 +8,8 @@ public class LoginTests extends Base{
     @Test
     public void clickLoginButton() throws InterruptedException {
         homepage.clickLoginButton();
-        loginPage.enterUsername("monde@gmail.com");
-        loginPage.enterPassword("@12345678");
+        loginPage.enterUsername(readData.username);
+        loginPage.enterPassword(readData.password);
         loginPage.clickLoginSubmitButton();
     }
     @Test(dependsOnMethods = "clickLoginButton")
@@ -34,12 +34,10 @@ public class LoginTests extends Base{
         learningMaterialsPage.confirmPurchase();
         learningMaterialsPage.successfulOrderMessage();
         learningMaterialsPage.verifyInvoiceDetails();
-
-
     }
-    /*@AfterClass
+    @AfterClass
     public void tearDown() {
         if (driver != null)
             driver.quit();
-    }*/
+    }
 }
