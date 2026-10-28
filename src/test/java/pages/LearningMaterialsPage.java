@@ -44,7 +44,7 @@ public class LearningMaterialsPage {
     @FindBy(id = "pricing-breakdown-grid")
     WebElement breakdownSummary;
     @FindBy(id = "breakdown-total-value")
-    private WebElement totalAmount;
+    WebElement totalAmount;
     @FindBy(id = "purchase-device-btn")
     WebElement confirmPurchase;
     @FindBy(xpath = "//h4[contains(text(),'Order Successful! \uD83C\uDF89')]")

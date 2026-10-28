@@ -35,9 +35,9 @@ public class LoginTests extends Base{
         learningMaterialsPage.successfulOrderMessage();
         learningMaterialsPage.verifyInvoiceDetails();
     }
-    @AfterClass
+    /*@AfterClass
     public void tearDown() {
         if (driver != null)
             driver.quit();
-    }
+    }*/
 }
