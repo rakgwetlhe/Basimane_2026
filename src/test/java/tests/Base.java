@@ -8,6 +8,7 @@ import pages.LearningMaterialsPage;
 import pages.LoginPage;
 import utils.BrowserFactory;
 import utils.ReadData;
+import utils.TakeScreenshots;
 
 import java.awt.image.RasterFormatException;
 
@@ -21,6 +22,7 @@ public class Base {
     public LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
     public LandingPage landingPage = PageFactory.initElements(driver, LandingPage.class);
     public LearningMaterialsPage learningMaterialsPage = PageFactory.initElements(driver, LearningMaterialsPage.class);
+    public TakeScreenshots takeScreenshots = new TakeScreenshots();
 
     ReadData readData;
 
