@@ -30,7 +30,7 @@ public class ReadData {
     public ReadData() throws Exception {
     }
 
-    static XSSFSheet sheet = workbook.getSheet("Sheet1");
+    static XSSFSheet sheet = workbook.getSheet("Login");
 
     public static String username = sheet.getRow(2).getCell(0).getStringCellValue();
     public static String password = sheet.getRow(2).getCell(1).getStringCellValue();
