@@ -55,6 +55,12 @@ public class LearningMaterialsPage {
     WebElement viewInvoiceBtn;
     @FindBy(xpath = "//button[contains(@id,'view-invoice-INV-')]")
     WebElement viewInvoiceLink;
+    @FindBy(id = "close-invoice-history-btn")
+    WebElement closeInvoiceHistoryBtn;
+    @FindBy(xpath = "//button[contains(@class,'user-pill') and .//span[normalize-space()='Menu']]")
+    WebElement menuButton;
+    @FindBy(xpath = "//span[normalize-space()='Logout']")
+    WebElement logoutButton;
 
     public void clickWebAutomationTab(WebDriver driver) {
         this.driver = driver;
@@ -213,7 +219,16 @@ public class LearningMaterialsPage {
             }
             if (driver.getWindowHandles().contains(parentWindow)) {
                 driver.switchTo().window(parentWindow);
+                closeInvoiceHistoryBtn.click();
+                menuButton.click();
+                wait.until(ExpectedConditions.elementToBeClickable(logoutButton)).click();
             }
         }
+    }
+    public void acceptAlert(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait.until(ExpectedConditions.alertIsPresent());
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
     }
 }

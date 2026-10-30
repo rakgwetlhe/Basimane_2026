@@ -37,6 +37,7 @@ public class LoginTests extends Base {
         learningMaterialsPage.confirmPurchase();
         learningMaterialsPage.successfulOrderMessage();
         learningMaterialsPage.verifyInvoiceDetails();
+        learningMaterialsPage.acceptAlert();
     }
     /*@AfterClass
     public void tearDown() {
