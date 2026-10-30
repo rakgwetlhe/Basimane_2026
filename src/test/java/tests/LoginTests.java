@@ -3,7 +3,7 @@ package tests;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
-public class LoginTests extends Base{
+public class LoginTests extends Base {
 
     @Test
     public void clickLoginButton() throws InterruptedException {
@@ -12,16 +12,19 @@ public class LoginTests extends Base{
         loginPage.enterPassword(readData.password);
         loginPage.clickLoginSubmitButton();
     }
+
     @Test(dependsOnMethods = "clickLoginButton")
     public void verifyLoginSuccess() {
         landingPage.getWelcomeMessage();
         landingPage.clickLearnButton();
         landingPage.clickLearningMaterials();
     }
+
     @Test(dependsOnMethods = "verifyLoginSuccess")
     public void clickWebAutomationTab() {
         learningMaterialsPage.clickWebAutomationTab(driver);
     }
+
     @Test(dependsOnMethods = "clickWebAutomationTab")
     public void purchaseDevice() {
         learningMaterialsPage.selectDeviceType("Phone");

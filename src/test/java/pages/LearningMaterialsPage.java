@@ -6,9 +6,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -96,7 +98,7 @@ public class LearningMaterialsPage {
     public void enterDeliveryAddress(String address) {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         this.address.sendKeys(address);
-        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 500);");
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 1000);");
         this.nextButton.click();
     }
 
@@ -143,29 +145,75 @@ public class LearningMaterialsPage {
 
         this.confirmPurchase.click();
     }
-    public void successfulOrderMessage(){
+
+    public void successfulOrderMessage() {
         wait.until(ExpectedConditions.visibilityOf(orderSuccessMessage));
 
-        Assert.assertEquals(orderSuccessMessage.getText().trim(),"ORDER SUCCESSFUL! \uD83C\uDF89");
+        Assert.assertEquals(orderSuccessMessage.getText().trim(), "ORDER SUCCESSFUL! \uD83C\uDF89");
 
         wait.until(ExpectedConditions.visibilityOf(viewInvoiceBtn));
 
-        ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].scrollIntoView({block:'center'});",
-                viewInvoiceBtn);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", viewInvoiceBtn);
 
         wait.until(ExpectedConditions.elementToBeClickable(viewInvoiceBtn));
 
         try {
             viewInvoiceBtn.click();
         } catch (ElementClickInterceptedException e) {
-            ((JavascriptExecutor) driver).executeScript(
-                    "arguments[0].click();",
-                    viewInvoiceBtn);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", viewInvoiceBtn);
         }
     }
+
     public void verifyInvoiceDetails() {
-        viewInvoiceLink.click();
+        String parentWindow = driver.getWindowHandle();
+        Set<String> existingWindows = driver.getWindowHandles();
+        WebDriverWait invoiceWait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        String invoiceId = viewInvoiceLink.getAttribute("id").replaceFirst("^view-invoice-", "");
+        String invoiceWindow = null;
+
+        try {
+            invoiceWait.until(ExpectedConditions.elementToBeClickable(viewInvoiceLink)).click();
+            invoiceWait.until(currentDriver ->
+                    currentDriver.getWindowHandles().size() > existingWindows.size());
+
+            for (String windowHandle : driver.getWindowHandles()) {
+                if (!existingWindows.contains(windowHandle)) {
+                    invoiceWindow = windowHandle;
+                    break;
+                }
+            }
+
+            if (invoiceWindow == null) {
+                throw new NoSuchWindowException("Invoice tab opened but its window handle was not found.");
+            }
+
+            driver.switchTo().window(invoiceWindow);
+
+            By invoiceTitle = By.xpath(
+                    "//div[contains(@class,'section-title') and normalize-space()='Invoice Details:']");
+
+            invoiceWait.until(ExpectedConditions.visibilityOfElementLocated(invoiceTitle));
+            invoiceWait.until(currentDriver -> {
+                String details = currentDriver.findElement(By.tagName("body")).getText();
+                return details.contains(invoiceId) && details.matches("(?is).*\\bpaid\\b.*");
+            });
+
+            String details = driver.findElement(By.tagName("body")).getText();
+            Assert.assertTrue(details.contains(invoiceId), "Invoice number was not shown.");
+            Assert.assertTrue(details.matches("(?is).*\\bpaid\\b.*"), "Paid status was not shown.");
+
+            Thread.sleep(Duration.ofSeconds(2));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException("Interrupted while keeping the verified invoice visible.", e);
+        } finally {
+            if (invoiceWindow != null && driver.getWindowHandles().contains(invoiceWindow)) {
+                driver.switchTo().window(invoiceWindow);
+                driver.close();
+            }
+            if (driver.getWindowHandles().contains(parentWindow)) {
+                driver.switchTo().window(parentWindow);
+            }
+        }
     }
 }
-
